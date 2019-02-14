@@ -67,7 +67,11 @@ def translate_e2m(sourcefile,destfile):
                 split_dot = words.split('.')  # if it's dotted words, split by dot.
                                               # ex: .c.o.d.e. --> ['','c','o','d','e','']
 
-                for i in range(2,len(split_dot)):
+                for i in range(2,len(split_dot)): # to match triple dots pattern
+                    if split_dot[i - 2] == "" and split_dot[i - 1] == "" and split_dot[i] != "":
+                        split_dot.insert(i-1,'.')   # put back the dots that have been removed by split('.')
+
+                for i in range(2,len(split_dot)): #to match more than 3 dots pattern
                     if split_dot[i - 2] == "" and split_dot[i - 1] == "" and split_dot[i] == "":
                         split_dot[i - 1] = '.'  # put back the dots that have been removed by split('.')
 
